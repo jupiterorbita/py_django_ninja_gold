@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ninja Gold!</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/myStyle.css' %}" />
+
+        
+  </head>
+  <body>
+    <div class="wrapper">
+      <h1>Ninja Gold</h1>
+      <hr />
+      <h4>your Gold: {{ request.session.gold }}<h4>
+        <p>
+          <form action="/clear_session" method="post">
+            {% csrf_token %}
+
+            <input type="submit" value="start over! 🙀">
+          </form>
+        </p>
+      <!-- boxes -->
+      <div class="boxes-group">
+        <!-- ==================== -->
+        <!-- ===    FARM       == -->
+        <!-- ==================== -->
+        <div class="box farm">
+          <h3>Farm</h3>
+          <p>(earns 10-20 gold)</p>
+          <!-- FARM FORM -->
+          <form action="/process_money" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="where_from" value="farm" />
+            <input type="submit" value="Find Gold" class="submit-button" />
+          </form>
+        </div>
+
+        <!-- ==================== -->
+        <!-- ===    CAVE       == -->
+        <!-- ==================== -->
+        <div class="box cave">
+          <h3>Cave</h3>
+          <p>(earns 5-10 gold)</p>
+          <!-- CAVE FORM -->
+          <form action="/process_money" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="where_from" value="cave" />
+            <input type="submit" value="Find Gold" class="submit-button" />
+          </form>
+        </div>
+
+        <!-- ==================== -->
+        <!-- ==    HOUSE       == -->
+        <!-- ==================== -->
+        <div class="box house">
+          <h3>House</h3>
+          <p>(earns 2-5 gold)</p>
+          <!-- HOUSE FORM -->
+          <form action="/process_money" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="where_from" value="house" />
+            <input type="submit" value="Find Gold" class="submit-button" />
+          </form>
+        </div>
+
+        <!-- ==================== -->
+        <!-- ==    CASINO      == -->
+        <!-- ==================== -->
+        <div class="box casino">
+          <h3>Casino</h3>
+          <p>(earns/takes 0-50 gold)</p>
+          <!-- CASINO FORM -->
+          <form action="/process_money" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="where_from" value="casino" />
+            <input type="submit" value="Find Gold" class="submit-button" />
+          </form>
+        </div>
+      </div>
+
+      <!-- output group -->
+      <div class="output">
+        <!-- <ul>
+        {% for val in request.session.my_output reversed %}
+          <li>
+
+            {{ val }}
+          </li>
+          {% endfor %}
+        </ul> -->
+        <br>
+        <ul>
+          {% for log in request.session.logs reversed%}
+          <!-- <li> -->
+            {{ log | safe}}
+          <!-- </li> -->
+          {% endfor %}
+        </ul>
+
+      </div>
+    </div>
+  </body>
+</html>
